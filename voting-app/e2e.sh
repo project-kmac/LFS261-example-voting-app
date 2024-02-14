@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-cd e2e 
+cd ../voting-app/e2e 
 
 docker-compose down > /dev/null 2>&1 
 
