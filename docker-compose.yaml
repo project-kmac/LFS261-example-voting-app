@@ -6,6 +6,7 @@ networks:
 services:
   vote:
     image: projectkmac/vote:latest
+    build: ./vote
     ports:
       - 5000:80
     depends_on:
@@ -31,6 +32,7 @@ services:
       - instavote
   result:
     image: projectkmac/result:latest
+    build: ./result
     ports:
       - 5001:80
     depends_on:
@@ -39,6 +41,7 @@ services:
       - instavote
   worker:
     image: projectkmac/worker:latest
+    build: ./worker
     depends_on:
       - redis
       - db
