@@ -153,6 +153,16 @@ pipeline {
 				}
 			}
 		}
+		stage("deploy to dev"{
+			agent any
+			when{
+				branch 'master'
+			}
+			steps{
+				echo 'Deploy instavote app with docker compose'
+				sh 'docker compose up -d'
+			}
+		}
 
 	}
 
@@ -161,61 +171,5 @@ pipeline {
 post{
 	always{
 		echo 'Building multibranch pipeline for worker is completed..'
-	}
-}
-pipeline { 
-    agent none
-    stages{ 
-
-    } 
-    post {
-        always{
-            echo 'Pipeline for vote is complete'
-        }
-    }
-
-} 
-
-
-pipeline {
-	agent any
-
-	tools{
-	nodejs 'nodejs 22.4.0'
-	}
-
-	stages{
-		stage("result-build"){
-			when{
-				changeset "**/result/**"
-			}
-			steps{
-				echo 'Compiling result app'
-				dir('result'){
-					sh 'npm install'
-				}
-			}
-
-		}
-		stage("result-test"){
-			when{
-				changeset "**/result/**"
-			}
-			steps{
-				echo 'Running Unit Tests on result app'
-				dir('result'){
-					sh 'npm install && npm test'
-				}
-			}
-		}
-		
-
-	}
-
-}
-
-post{
-	always{
-		echo 'Building multibranch pipeline for result is completed..'
 	}
 }
